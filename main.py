@@ -59,11 +59,20 @@ class astrbot_plugin_better_facebread(Star):
     async def on_llm_req(self, event: AstrMessageEvent, req: ProviderRequest): # 请注意有三个参数
         req.system_prompt += "请在文本末尾加入[怒][笑][悲][哭][惊]其中之一以表达情感，如果没有可以不加，其中[笑]是在嘲笑。"
 
-    @filter.on_llm_response()
     @filter.on_decorating_result()
     async def on_decorating_result(self, event: AstrMessageEvent):
         result = event.get_result()
         chain = result.chain
-        text_content = chain[0].text
-        path = match(text_content)
-        chain.append(Image.fromFileSystem(path))
+        print(chain)
+        texts = []
+        for item in chain:
+            if isinstance(item, Plain):
+                texts.append(item.text.strip())
+            elif isinstance(item, str):
+                texts.append(item.strip())
+
+        full_text = ' '.join(texts)
+        if full_text != '':
+            path = match(full_text)
+            if path != None:
+                chain.append(Image.fromFileSystem(path))
