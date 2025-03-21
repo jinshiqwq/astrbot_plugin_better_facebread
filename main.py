@@ -50,7 +50,7 @@ def match(inpt):
         return None
     
 
-@register("astrbot_plugin_better_facebread", "xiewoc", "使llm在返回消息时能发送表情包", "0.0.1", "repo url")
+@register("astrbot_plugin_better_facebread", "xiewoc", "使llm在返回消息时能发送表情包", "1.0.1", "repo url")
 class astrbot_plugin_better_facebread(Star):
     def __init__(self, context: Context):
         super().__init__(context)
@@ -76,3 +76,11 @@ class astrbot_plugin_better_facebread(Star):
             path = match(full_text)
             if path != None:
                 chain.append(Image.fromFileSystem(path))
+                
+    @filter.on_llm_response()#删除[*]
+    async def resp(self, event: AstrMessageEvent, response: LLMResponse):
+        if not self.display_reasoning_text:
+            completion_text = response.completion_text
+            if r'\[[\u4e00-\u9fa5]\]' in completion_text:
+                 cleaned_text = re.sub(r'\[[\u4e00-\u9fa5]\]', '', completion_text)
+            response.completion_text = cleaned_text
