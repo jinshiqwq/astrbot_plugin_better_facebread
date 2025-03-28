@@ -80,6 +80,7 @@ class astrbot_plugin_better_facebread(Star):
     @filter.on_llm_response()#删除[*]
     async def resp(self, event: AstrMessageEvent, response: LLMResponse):
         completion_text = response.completion_text
+        cleaned_text = completion_text  
         if r'\[[\u4e00-\u9fa5]\]' in completion_text:
              cleaned_text = re.sub(r'\[[\u4e00-\u9fa5]\]', '', completion_text)
         response.completion_text = cleaned_text
