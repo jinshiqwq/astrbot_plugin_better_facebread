@@ -57,7 +57,7 @@ class astrbot_plugin_better_facebread(Star):
 
     @filter.on_llm_request()
     async def on_llm_req(self, event: AstrMessageEvent, req: ProviderRequest): # 请注意有三个参数
-        req.system_prompt += "请在文本末尾加入[怒][笑][悲][哭][惊]其中之一以表达情感，如果没有可以不加，其中[笑]是在嘲笑。"
+        req.system_prompt += "请在文本末尾加入[怒][笑][悲][哭][惊]其中之一以表达情感，如果没有可以不加"
 
     @filter.on_decorating_result()
     async def on_decorating_result(self, event: AstrMessageEvent):
