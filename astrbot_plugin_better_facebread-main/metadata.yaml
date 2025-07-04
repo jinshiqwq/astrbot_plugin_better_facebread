@@ -1,0 +1,6 @@
+name: astrbot_plugin_better_facebread
+desc: 用于使llm生成文字后能发送相同情感的表情包。 
+help: 正常输入便可 
+version: v1.0.1 
+author: xiewoc 
+repo: https://github.com/xiewoc/astrbot_plugin_better_facebread
